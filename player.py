@@ -6,9 +6,9 @@ pygame.init()
 class Player(Person) :
     def makePlayer(self) :
         self.__myPlayer = pygame.sprite.Sprite()
-        self.__myPlayer.image = pygame.image.load('person.jpg')
+        self.__myPlayer.image = pygame.image.load('person_new.png')
         self.__myPlayer.rect = self.__myPlayer.image.get_rect()
-        self.__myPlayer.rect.left = 50
+        self.__myPlayer.rect.left = 30
         self.__myPlayer.rect.top = 725
         return self.__myPlayer
 
@@ -24,7 +24,8 @@ class Player(Person) :
 
     def setPosition(self, direction, displacement) :
         if direction == "U":
-            self.__myPlayer.rect.top -= displacement
+            if self.__myPlayer.rect.top - displacement > 70 :
+                self.__myPlayer.rect.top -= displacement
         elif direction == "D":
             self.__myPlayer.rect.top += displacement
         elif direction == "L":
@@ -33,11 +34,11 @@ class Player(Person) :
             self.__myPlayer.rect.left += displacement
 
     def moveUP(self, screen) :
-        self.setPosition("U",70/3)
+        self.setPosition("U",20)
         screen.blit(self.__myPlayer.image,(self.__myPlayer.rect.left, self.__myPlayer.rect.top))
 
     def moveDown(self, screen) :
-        self.setPosition("D",70/3)
+        self.setPosition("D",20)
         screen.blit(self.__myPlayer.image,(self.__myPlayer.rect.left, self.__myPlayer.rect.top))
 
     def moveLeft(self, screen) :

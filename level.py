@@ -30,3 +30,6 @@ def makeLevel1(screen):
     levelInit.commonInit(screen)
     myStair.addStairs(screen)
     myStair.addBrokenStairs(screen)
+
+def Level1bars():
+    return [40,120,200,280,360,440,520,600,680,760]

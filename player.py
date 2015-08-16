@@ -1,9 +1,19 @@
 import pygame
 from person import Person
 from config import *
+from stair import Stair
+import level
 pygame.init()
 
 class Player(Person) :
+    #def __init__(self) :
+    #    super(self.__class__,self).__init__()
+    #    self.__playerGroup = pygame.sprite.GroupSingle()
+    
+    # returns playerGroup
+    #def getPlayerGroup() :
+    #    return self.__playerGroup
+
     def makePlayer(self) :
         self.__myPlayer = pygame.sprite.Sprite()
         self.__myPlayer.image = pygame.image.load('person_new.png')
@@ -18,9 +28,9 @@ class Player(Person) :
         elif direction == "D":
             return self.__myPlayer.rect.top - 35
         elif direction == "L":
-            return self.__myPlayer.rect.top
+            return self.__myPlayer.rect.left
         elif direction == "R":
-            return self.__myPlayer.rect.top + 35
+            return self.__myPlayer.rect.left + 30
 
     def setPosition(self, direction, displacement) :
         if direction == "U":
@@ -32,19 +42,24 @@ class Player(Person) :
             self.__myPlayer.rect.left -= displacement
         elif direction == "R":
             self.__myPlayer.rect.left += displacement
+    
 
-    def moveUP(self, screen) :
-        self.setPosition("U",20)
-        screen.blit(self.__myPlayer.image,(self.__myPlayer.rect.left, self.__myPlayer.rect.top))
+    def moveUP(self, screen,hero_group,stairGroup) :
+        collision = pygame.sprite.groupcollide(hero_group, level.getStairGroup(),False,True)
+        if len(collision) > 0:
+            self.setPosition("U",20)
 
-    def moveDown(self, screen) :
-        self.setPosition("D",20)
-        screen.blit(self.__myPlayer.image,(self.__myPlayer.rect.left, self.__myPlayer.rect.top))
+    def moveDown(self, screen,hero_group,stairGroup) :
+        collision = pygame.sprite.groupcollide(hero_group, level.getStairGroup(),False,True)
+        if len(collision) > 0:
+            if self.getPosition("D") < 705 :
+                print self.getPosition("U")
+                self.setPosition("D",20)
 
     def moveLeft(self, screen) :
-        self.setPosition("L",TILE_SIZE)
-        screen.blit(self.__myPlayer.image,(self.__myPlayer.rect.left, self.__myPlayer.rect.top))
+        if self.getPosition("L") > 10 :
+            self.setPosition("L",TILE_SIZE)
 
     def moveRigth(self, screen) :
-        self.setPosition("R",TILE_SIZE)
-        screen.blit(self.__myPlayer.image,(self.__myPlayer.rect.left, self.__myPlayer.rect.top))
+        if self.getPosition("R") < WIDTH - 20 :
+            self.setPosition("R",TILE_SIZE)

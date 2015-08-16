@@ -5,8 +5,14 @@ from config import *
 import levelInit
 
 def selectLevel(screen,Level):
+
     if Level == 1 :
         makeLevel1(screen)
+
+myStair = Stair()
+
+def getStairGroup():
+    return myStair.getStairGroup()
 
 def makeLevel1(screen):
     screen.fill((255, 255, 255))
@@ -16,11 +22,11 @@ def makeLevel1(screen):
         if k%2 == 0:
             pygame.draw.line(screen, (255,0,255) , (30, i), (WIDTH - 120, i), 2)
         else:
-            pygame.draw.line(screen, (255,0,255) , (60, i),(WIDTH - 90, i), 2)
+            pygame.draw.line(screen, (255,0,255) , (120, i),(WIDTH - 90, i), 2)
         k += 1
 	#pygame.draw.line(screen, (255,0,255) , (1, i+4), (WIDTH-1, i+4), 2)
     
     picked = True
     levelInit.commonInit(screen)
-    addStairs(screen)
-    addBrokenStairs(screen)
+    myStair.addStairs(screen)
+    myStair.addBrokenStairs(screen)

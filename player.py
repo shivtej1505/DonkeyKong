@@ -6,13 +6,6 @@ import level
 pygame.init()
 
 class Player(Person) :
-    #def __init__(self) :
-    #    super(self.__class__,self).__init__()
-    #    self.__playerGroup = pygame.sprite.GroupSingle()
-    
-    # returns playerGroup
-    #def getPlayerGroup() :
-    #    return self.__playerGroup
 
     def makePlayer(self) :
         self.__myPlayer = pygame.sprite.Sprite()
@@ -43,14 +36,11 @@ class Player(Person) :
             self.__myPlayer.rect.left -= displacement
         elif direction == "R":
             self.__myPlayer.rect.left += displacement
-
+    
     def getDown(self) :
         stairListTop = level.Level1stairsTop()
         stairListTop.reverse()
         stairList = level.Level1stairs()
-        '''
-        atStop = self.getPosition("D")+1 in stairListTop
-        '''
         godown = self.getPosition("L") in stairList
         if self.getPosition("D") == stairListTop[self.__myPlayer.barNo-2]  and godown :
             return True
@@ -70,6 +60,29 @@ class Player(Person) :
             return True
         else :
             return False
+    
+    def gravity(self) :
+        barList = level.Level1bars()
+        barList.reverse()
+        barsStart = level.Level1barsWidths()
+        onBar = self.__myPlayer.barNo
+        print onBar
+        if onBar%2 == 1 :
+            if self.getPosition("L") < barsStart[0] :
+                y = self.getPosition("D")
+                self.setPosition("D",-y+800)
+            elif self.getPosition("R") > WIDTH - 120 :
+                if onBar == 1:
+                    self.setPosition("D",20)
+                else:
+                    self.setPosition("D",80)
+        else :
+            if self.getPosition("L") < barsStart[1] :
+                self.setPosition("D",80)
+            elif self.getPosition("L") > WIDTH - 110 :
+                y = self.getPosition("D")
+                self.setPosition("D",-y+800)
+        self.setBarNo()
 
     def setBarNo(self):
         barList = level.Level1bars()
@@ -92,12 +105,7 @@ class Player(Person) :
         barList = level.Level1bars()
         barList.reverse()
         collision = pygame.sprite.groupcollide(hero_group, level.getStairGroup(),False,True)
-        print "player "+str(self.getPosition("D"))
-        print "bar " +str(barList[self.__myPlayer.barNo-1])
-        print "barNo " + str(self.__myPlayer.barNo)
         if len(collision) > 0:
-            print "Collision"
-            #if self.getPosition("D") + 20 <= barList[self.__myPlayer.barNo-1] or ( self.getPosition("D") + 20 <= barList[self.__myPlayer.barNo-1] and self.getDown()) :
             if self.getPosition("D") + 20 <= barList[self.__myPlayer.barNo-1] :
                 self.setPosition("D",20)
         elif self.getDown() :
@@ -107,7 +115,9 @@ class Player(Person) :
     def moveLeft(self, screen) :
         if self.getPosition("L") > 10 and self.isMoveSide() :
             self.setPosition("L",TILE_SIZE)
+        self.gravity()
 
     def moveRigth(self, screen) :
         if self.getPosition("R") < WIDTH - 20 and self.isMoveSide() :
             self.setPosition("R",TILE_SIZE)
+        self.gravity()

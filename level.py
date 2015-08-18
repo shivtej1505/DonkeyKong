@@ -34,6 +34,9 @@ def makeLevel1(screen):
 def Level1bars():
     return [40 ,120 ,200 ,280 ,360 ,440 ,520 ,600 ,680 ,760]
 
+def Level1barsWidths():
+    return [30,120]
+
 def Level1stairs():
     return [300 ,540 ,780]
 

@@ -22,7 +22,7 @@ def main():
     hero_group = pygame.sprite.GroupSingle(hero.makePlayer())
     fireball = Fireball()
     fireball_group = pygame.sprite.GroupSingle(fireball.makeFireball())
-    pygame.key.set_repeat(10,10)
+    pygame.key.set_repeat(8,10)
     while done == False :
         level.selectLevel(screen,1)
         hero_group.draw(screen)

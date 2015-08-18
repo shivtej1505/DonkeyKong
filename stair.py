@@ -11,7 +11,7 @@ class Stair :
     def makeStair(self,stairType) :
         if stairType == "Complete" :
             myStair = pygame.sprite.Sprite()
-            myStair.image = pygame.image.load('stairs.png')
+            myStair.image = pygame.image.load('stairs_new.png')
             myStair.rect = myStair.image.get_rect()
             return myStair
         elif stairType == "Broken" :
@@ -39,7 +39,7 @@ class Stair :
 	        stair.rect.left = 18 * TILE_SIZE
             else:
 	        stair.rect.left = 10 * TILE_SIZE 
-	    stair.rect.top =  204 + i*80
+	    stair.rect.top =  200 + i*80
 	    self.__stair_group.add(stair)
             even += 1 
         self.__stair_group.draw(screen)

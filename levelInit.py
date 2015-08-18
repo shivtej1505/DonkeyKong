@@ -11,4 +11,4 @@ def commonInit(screen):
 
 	# Cage maker
         pygame.draw.line(screen, (255,0,255) , (20, 120), (WIDTH - 20, 120), 2)
-	pygame.draw.line(screen, (255,0,255) , (20, 124), (WIDTH - 20, 124), 2)
+	#pygame.draw.line(screen, (255,0,255) , (20, 124), (WIDTH - 20, 124), 2)

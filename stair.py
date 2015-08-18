@@ -47,7 +47,7 @@ class Stair :
     # draws broken stairs
     def addBrokenStairs(self,screen) :
         odd = 0
-	for i in range(-1,7):
+	for i in range(0,7):
 	    broken_stair_top = Stair().makeStair("Broken")
 	    broken_stair_top.rect.top =  204 + i*80
 	    broken_stair_down = Stair().makeStair("Broken")

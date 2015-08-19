@@ -3,19 +3,26 @@ from person import Person
 from config import *
 from stair import Stair
 import level
+import levelInit
 pygame.init()
 
 class Player(Person) :
 
-    def makePlayer(self) :
+    def makePlayer(self,lifes) :
         self.__myPlayer = pygame.sprite.Sprite()
         self.__myPlayer.image = pygame.image.load('person_new.png')
         self.__myPlayer.rect = self.__myPlayer.image.get_rect()
         self.__myPlayer.rect.left = 30
         self.__myPlayer.rect.top = 730
         self.__myPlayer.barNo = 1
+        self.__myPlayer.life = lifes
         return self.__myPlayer
     
+    def playerDied(self,screen) :
+        self.__myPlayer.life -= 1
+        levelInit.playerKilled(self.__myPlayer.life,screen)
+        return self.__myPlayer.life
+
     def getPosition(self, direction) :
         if direction == "U":
             return self.__myPlayer.rect.top
@@ -66,7 +73,6 @@ class Player(Person) :
         barList.reverse()
         barsStart = level.Level1barsWidths()
         onBar = self.__myPlayer.barNo
-        print onBar
         if onBar%2 == 1 :
             if self.getPosition("L") < barsStart[0] :
                 y = self.getPosition("D")
@@ -92,7 +98,6 @@ class Player(Person) :
                 self.__myPlayer.barNo = i+1
 
     def getBarNo(self):
-        print self.__myPlayer.barNo
         return self.__myPlayer.barNo
 
     def moveUP(self, screen,hero_group,stairGroup) :

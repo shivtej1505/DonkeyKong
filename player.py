@@ -55,7 +55,6 @@ class Player(Person) :
             return False
 
     def printPos(self) :
-        pass
         print "UP :" + str(self.getPosition("U"))
         print "DOWN :" + str(self.getPosition("D"))
         print "LEFT :" + str(self.getPosition("L"))

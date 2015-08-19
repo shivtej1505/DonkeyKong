@@ -1,6 +1,8 @@
 import pygame
+import random
 from config import *
 from time import sleep
+from coin import Coin
 pygame.init()
 
 # stuffs common in all levels
@@ -26,3 +28,12 @@ def playerKilled(lifes, screen) :
     doWrite = killed.render("killed", 1, (0, 0, 0))
     screen.blit(doWrite, (400,400))
     pygame.font.quit()
+
+def genCoins(num) :
+    coinGroup = pygame.sprite.OrderedUpdates()
+    for coin in range(num) :
+        myCoin = Coin().makeCoin()
+        myCoin.rect.left = random.randint(1,20) * TILE_SIZE
+        myCoin.rect.top = random.randint(1,10) * 80
+        coinGroup.add(myCoin)
+    return coinGroup

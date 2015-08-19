@@ -49,9 +49,9 @@ class Stair :
         odd = 0
 	for i in range(0,7):
 	    broken_stair_top = Stair().makeStair("Broken")
-	    broken_stair_top.rect.top =  204 + i*80
+	    broken_stair_top.rect.top =  200 + i*80
 	    broken_stair_down = Stair().makeStair("Broken")
-	    broken_stair_down.rect.top =  254 + i*80
+	    broken_stair_down.rect.top =  250 + i*80
             if odd%3 == 0: 
         	pos = 6 * TILE_SIZE
 	        broken_stair_top.rect.left = pos 

@@ -20,6 +20,7 @@ def main():
     # Initialize level
     
     lifes = 3
+    COINS = 20
 
     done = False
     donkey = Donkey()
@@ -28,13 +29,13 @@ def main():
     hero = Player()
     hero_group = pygame.sprite.GroupSingle(hero.makePlayer(lifes))
 
-    fireball = Fireball()
     fireball_group =  pygame.sprite.OrderedUpdates()
     Fireballs = []
-    fireball_group.add(fireball.makeFireball())            
-    Fireballs.append(fireball)
     
-    fireSource = pygame.sprite.GroupSingle(fireball.makeFireSource())
+    fireballS = Fireball()
+    fireSource = pygame.sprite.GroupSingle(fireballS.makeFireSource())
+    
+    coinGroup = comLevels.genCoins(COINS)
 
     pygame.key.set_repeat(8,10)
     FIRETIME = pygame.USEREVENT + 1
@@ -57,29 +58,28 @@ def main():
                     hero.moveLeft(screen)
                 elif event.key == pygame.K_d or event.key == pygame.K_RIGHT :
                     hero.moveRigth(screen)
-                '''
                 elif event.key == pygame.K_f :
                     for ball in Fireballs :
                         ball.setSpeedP()
                 elif event.key == pygame.K_b :
                     for ball in Fireballs :
                         ball.setSpeedN()
-                ''' 
             if event.type == pygame.USEREVENT :
                 donkey.move()
                 donkey.chgSpeed()
-            '''
             if event.type == FIRETIME :
+                fireball = Fireball()
                 fireball_group.add(fireball.makeFireball())            
                 Fireballs.append(fireball)
-            '''
-        for ball in Fireballs :
-            ball.moveBalls()
-            ball.gravity()
-            ball.onBarless()
+            for ball in Fireballs :
+                ball.moveBalls()
+                ball.gravity()
+                ball.onBarless()
+                ball.killFireball()
 
-        collision = pygame.sprite.groupcollide(donkey_group,hero_group,False,True)
-        if len(collision) > 0:
+        collDon = pygame.sprite.groupcollide(donkey_group,hero_group,False,True)
+        collFire = pygame.sprite.groupcollide(fireball_group,hero_group,False,True)
+        if len(collDon) > 0 or len(collFire) > 0 :
             lifes = hero.playerDied(screen)
             pygame.display.update()
             hero_group = pygame.sprite.GroupSingle(hero.makePlayer(lifes))
@@ -89,6 +89,7 @@ def main():
                 print "key"
 
         level.selectLevel(screen,1)
+        coinGroup.draw(screen)
         hero_group.draw(screen)
         fireSource.draw(screen)
         fireball_group.draw(screen)

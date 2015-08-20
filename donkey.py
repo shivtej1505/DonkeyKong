@@ -7,10 +7,10 @@ class Donkey(Person) :
 
     def makeDonkey(self) :
 	self.__myDonkey = pygame.sprite.Sprite()
-        self.__myDonkey.image = pygame.image.load('donkey_new.png')
+        self.__myDonkey.image = pygame.image.load('donkey2_new.png')
         self.__myDonkey.rect = self.__myDonkey.image.get_rect()
         self.__myDonkey.rect.left = 120
-        self.__myDonkey.rect.top = 122
+        self.__myDonkey.rect.top = 135
         self.__myDonkey.speed = 30
         return self.__myDonkey
     
@@ -29,11 +29,11 @@ class Donkey(Person) :
         if direction == "U":
             return self.__myDonkey.rect.top
         elif direction == "D":
-            return self.__myDonkey.rect.top + 30
+            return self.__myDonkey.rect.top + 65
         elif direction == "L":
             return self.__myDonkey.rect.left
         elif direction == "R":
-            return self.__myDonkey.rect.left + 30
+            return self.__myDonkey.rect.left + 65
 
     def setPosition(self, direction, displacement) :
         if direction == "U":

@@ -15,6 +15,8 @@ class Player(Person) :
         self.__myPlayer.rect.left = 30
         self.__myPlayer.rect.top = 730
         self.__myPlayer.barNo = 1
+        self.__myPlayer.jmpVel = 0
+        self.__myPlayer.state = "STANDING"
         self.__myPlayer.life = lifes
         return self.__myPlayer
     
@@ -22,6 +24,31 @@ class Player(Person) :
         self.__myPlayer.life -= 1
         levelInit.playerKilled(self.__myPlayer.life,screen)
         return self.__myPlayer.life
+    
+    def setState(self,state) :
+        self.__myPlayer.state = state
+
+    def getState(self) :
+        return self.__myPlayer.state
+
+    def jump(self,times) :
+        barList = level.Level1bars()
+        if self.getState() == "JUMPING" :
+            if self.getPosition("D") in barList :
+                self.setPosition("U",30)
+            elif self.getPosition("D") -30 in barList : 
+                self.setPosition("U",20)
+            else :
+                self.setPosition("U",-25)
+            return times+1
+        else :
+            return times
+    
+    def allowLeft(self) :
+        self.setPosition("L",20)
+
+    def allowRight(self) :
+        self.setPosition("R",20)
 
     def getPosition(self, direction) :
         if direction == "U":

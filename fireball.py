@@ -7,7 +7,7 @@ pygame.init()
 class Fireball :
     def __init__(self) :
         self.__myFire = pygame.sprite.Sprite()
-        self.__myFire.image = pygame.image.load('fireball_new.png')
+        self.__myFire.image = pygame.image.load('fireball2_new.png')
         self.__myFire.rect = self.__myFire.image.get_rect()
         self.__myFire.rect.left = 120
         self.__myFire.rect.top = 170
@@ -23,10 +23,10 @@ class Fireball :
 
     def makeFireSource(self) :
         self.__myFireSource = pygame.sprite.Sprite()
-        self.__myFireSource.image = pygame.image.load('fireball_source.png')
+        self.__myFireSource.image = pygame.image.load('fireball2_source.png')
         self.__myFireSource.rect = self.__myFireSource.image.get_rect()
         self.__myFireSource.rect.left = 140
-        self.__myFireSource.rect.top = 150
+        self.__myFireSource.rect.top = 140
         return self.__myFireSource 
     
     def moveBalls(self) :
@@ -92,39 +92,40 @@ class Fireball :
         stairListTop = level.Level1stairsTop()
         stairListTop.reverse()
         stairListTop.pop()
-        stairListTop.insert(0,760)
+        stairListTop.insert(0,780)
 
         '''
         print self.getPosition("D")
         print self.getPosition("L")
         print self.__myFire.barNo
         '''
+        luck = random.choice([True,False])
 
         # full stairs
         if  self.getBarNo() == 8 or self.getBarNo() == 5 or self.getBarNo() == 2 :
-            if self.getPosition("L") == 540 and ( self.getPosition("D") in stairListTop[1::3]) :
+            if self.getPosition("L") == 540 and ( self.getPosition("D") in stairListTop[1::3]) and luck:
                 self.setPosition("D",80)
                 self.setBarNo()
         elif  self.getBarNo() == 7 or self.getBarNo() == 4 or self.getBarNo() == 1 :
-            if self.getPosition("L") == 300 and ( self.getPosition("D") in stairListTop[0::3]) :
+            if self.getPosition("L") == 300 and ( self.getPosition("D") in stairListTop[0::3]) and luck:
                 self.setPosition("D",80)
                 self.setBarNo()
         elif  self.getBarNo() == 6 or self.getBarNo() == 3 :
-            if self.getPosition("L") == 760 and ( self.getPosition("D") in stairListTop[2::3]) :
+            if self.getPosition("L") == 780 and ( self.getPosition("D") in stairListTop[2::3]) and luck:
                 self.setPosition("D",80)
                 self.setBarNo()
         
         # broken stairs
         if  self.getBarNo() == 8 or self.getBarNo() == 5 or self.getBarNo() == 2 :
-            if self.getPosition("L") == 180 and ( self.getPosition("D") in stairListTop[1::3]) :
+            if self.getPosition("L") == 180 and ( self.getPosition("D") in stairListTop[1::3]) and luck:
                 self.setPosition("D",80)
                 self.setBarNo()
         elif  self.getBarNo() == 7 or self.getBarNo() == 4 or self.getBarNo() == 1 :
-            if self.getPosition("L") == 390 and ( self.getPosition("D") in stairListTop[0::3]) :
+            if self.getPosition("L") == 390 and ( self.getPosition("D") in stairListTop[0::3]) and luck:
                 self.setPosition("D",80)
                 self.setBarNo()
         elif  self.getBarNo() == 6 or self.getBarNo() == 3 :
-            if self.getPosition("L") == 600 and ( self.getPosition("D") in stairListTop[2::3]) :
+            if self.getPosition("L") == 600 and ( self.getPosition("D") in stairListTop[2::3]) and luck:
                 self.setPosition("D",80)
                 self.setBarNo()
 

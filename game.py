@@ -20,7 +20,9 @@ def main():
     # Initialize level
     
     lifes = 3
+    score = 0
     COINS = 20
+    times = 0
 
     done = False
     donkey = Donkey()
@@ -50,13 +52,19 @@ def main():
             if event.type == pygame.KEYDOWN :
                 if event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
                     done = True
+                elif event.key == pygame.K_SPACE :
+                    hero.setState("JUMPING")
                 elif event.key == pygame.K_w or event.key == pygame.K_UP :
                     hero.moveUP(screen,hero_group,level.getStairGroup())
                 elif event.key == pygame.K_s or event.key == pygame.K_DOWN :
                     hero.moveDown(screen,hero_group,level.getStairGroup())
                 elif event.key == pygame.K_a or event.key == pygame.K_LEFT :
+                    if hero.getState == ("JUMPING") :
+                        hero.allowLeft()
                     hero.moveLeft(screen)
                 elif event.key == pygame.K_d or event.key == pygame.K_RIGHT :
+                    if hero.getState() == "JUMPING" :
+                        hero.allowRight()
                     hero.moveRigth(screen)
                 elif event.key == pygame.K_f :
                     for ball in Fireballs :
@@ -80,6 +88,14 @@ def main():
         collDon = pygame.sprite.groupcollide(donkey_group,hero_group,False,True)
         collFire = pygame.sprite.groupcollide(fireball_group,hero_group,False,True)
         if len(collDon) > 0 or len(collFire) > 0 :
+            if score >= 25 :
+                score -= 25
+            else :
+                score = 0
+            print "player: D " + str(hero.getPosition("D"))
+            print "player: L " + str(hero.getPosition("L"))
+            print "donkey: D " + str(donkey.getPosition("D"))
+            print "donkey: L " + str(donkey.getPosition("L"))
             lifes = hero.playerDied(screen)
             pygame.display.update()
             hero_group = pygame.sprite.GroupSingle(hero.makePlayer(lifes))
@@ -87,7 +103,16 @@ def main():
                 time.sleep(3)
             except :
                 print "key"
-
+        
+        collCoin = pygame.sprite.groupcollide(coinGroup,hero_group,True,False)
+        if len(collCoin) > 0 :
+            score += 20
+        
+        print "times" + str(times)
+        times = hero.jump(times)
+        if times == 3:
+            hero.setState("STANDING")
+            times = 0
         level.selectLevel(screen,1)
         coinGroup.draw(screen)
         hero_group.draw(screen)
@@ -95,6 +120,7 @@ def main():
         fireball_group.draw(screen)
         donkey_group.draw(screen)
         comLevels.updateLife(lifes,screen)
+        comLevels.updateScore(score,screen)
         pygame.display.update()
         
         if lifes == 0:

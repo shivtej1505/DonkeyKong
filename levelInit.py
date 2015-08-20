@@ -19,9 +19,15 @@ def commonInit(screen) :
 
 def updateLife(lifes, screen) :
     pygame.font.init()
-    myFont = pygame.font.Font(None, 40)
+    myFont = pygame.font.Font(None, 30)
     Lifes = myFont.render("Lifes :" + str(lifes), 1, (0, 0, 0))
     screen.blit(Lifes, (850, 15))
+
+def updateScore(score, screen) :
+    pygame.font.init()
+    myFont = pygame.font.Font(None, 30)
+    Score = myFont.render("Score :" + str(score), 1, (0, 0, 0))
+    screen.blit(Score, (850, 40))
 
 def playerKilled(lifes, screen) :
     killed = pygame.font.Font(None,100)

@@ -60,11 +60,11 @@ def main():
                     hero.moveDown(screen,hero_group,level.getStairGroup())
                 elif event.key == pygame.K_a or event.key == pygame.K_LEFT :
                     if hero.getState == ("JUMPING") :
-                        hero.allowLeft()
+                        hero.allowLeft(True)
                     hero.moveLeft(screen)
                 elif event.key == pygame.K_d or event.key == pygame.K_RIGHT :
                     if hero.getState() == "JUMPING" :
-                        hero.allowRight()
+                        hero.allowRight(True)
                     hero.moveRigth(screen)
                 elif event.key == pygame.K_f :
                     for ball in Fireballs :
@@ -108,10 +108,14 @@ def main():
         if len(collCoin) > 0 :
             score += 20
         
-        print "times" + str(times)
+        if hero.getState() == "JUMPING":
+            hero.printPos()
+            print "--------"
         times = hero.jump(times)
-        if times == 3:
+        if times == 4:
             hero.setState("STANDING")
+            hero.allowLeft(False)
+            hero.allowRight(False)
             times = 0
         level.selectLevel(screen,1)
         coinGroup.draw(screen)

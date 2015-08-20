@@ -18,6 +18,8 @@ class Player(Person) :
         self.__myPlayer.jmpVel = 0
         self.__myPlayer.state = "STANDING"
         self.__myPlayer.life = lifes
+        self.__myPlayer.jmpL = False
+        self.__myPlayer.jmpR = False
         return self.__myPlayer
     
     def playerDied(self,screen) :
@@ -36,19 +38,25 @@ class Player(Person) :
         if self.getState() == "JUMPING" :
             if self.getPosition("D") in barList :
                 self.setPosition("U",30)
-            elif self.getPosition("D") -30 in barList : 
+            elif self.getPosition("D") +30 in barList : 
                 self.setPosition("U",20)
             else :
                 self.setPosition("U",-25)
+            if times == 1 or times == 2:
+                if self.__myPlayer.jmpL :
+                    self.setPosition("L",30)
+                elif self.__myPlayer.jmpR :
+                    self.setPosition("R",30)
+
             return times+1
         else :
             return times
     
-    def allowLeft(self) :
-        self.setPosition("L",20)
+    def allowLeft(self,what) :
+        self.__myPlayer.jmpL = what
 
-    def allowRight(self) :
-        self.setPosition("R",20)
+    def allowRight(self,what) :
+        self.__myPlayer.jmpR = what
 
     def getPosition(self, direction) :
         if direction == "U":
